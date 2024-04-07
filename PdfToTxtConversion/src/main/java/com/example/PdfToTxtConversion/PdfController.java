@@ -26,6 +26,8 @@ public class PdfController {
 
     @PostMapping("/pdftotxt")
     public String pdfToTxt(@RequestParam("file") MultipartFile file) throws IOException{
+        UUID uuid=UUID.randomUUID();
+        String refId=uuid.toString();
 
         String name=file.getOriginalFilename();
         String pathx="C:\\Users\\SCOREME-LT-PRAVIN\\Desktop\\S's work\\";
@@ -38,11 +40,11 @@ public class PdfController {
         PDDocument pd=Loader.loadPDF(new File(String.valueOf(filePath)));
             PDFTextStripper stripper = new PDFTextStripper();
            String text = stripper.getText(pd);
-            File outputFile = new File(filePath+".txt");
+            File outputFile = new File(pathx+refId+".txt");
             FileWriter writer = new FileWriter(outputFile);
             writer.write(text);
             writer.close();
 
-                return "Successfully:-  "+name+" "+ filePath +"converted  "+writer;
+                return "Successfully:-  "+name+" "+ pathx +"converted  "+writer+"\n refId: "+refId;
     }
 }
